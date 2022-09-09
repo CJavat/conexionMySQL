@@ -1,0 +1,19 @@
+{
+  "name": "api-rest",
+  "version": "1.0.0",
+  "description": "Practica de una conexion en MySQL y mostrarlo en el navegador.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CJavat/conexionMySQL.git"
+  },
+  "author": "CJAVAT",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/CJavat/conexionMySQL/issues"
+  },
+  "homepage": "https://github.com/CJavat/conexionMySQL#readme"
+}
