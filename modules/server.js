@@ -1,9 +1,16 @@
 const express = require('express');
 const app = express();
-const path = require('path');
-const raiz = path.join(__dirname, '../');
 
-app.use('/public', express.static(path.resolve(raiz+'/css', 'public')));
+
+// Para poner rutas estaticas.
+app.use(express.static('public'));
+// Otra opcion para personalizar los links son:
+// app.use('/rutaPersonalizada', express.static('public'));
+// --> para igresar seria: localhost:9090/rutaPersonalizada/index.html
+
+// MIDDLEWARE - Sirve para parsear el body del POST para poderlo obtener.
+const bodyParser = require('body-parser')
+app.use(bodyParser.urlencoded({ extended: false }))
 
 app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
@@ -16,7 +23,7 @@ app.use((req, res, next) => {
 const queries = require('./queries');
 
 const consultas = async () => {
-    const mostrar = await queries;
+    const mostrar = await queries.query;
     app.get('/api/usuarios', (req, res) => {
         console.log(mostrar);
         res.send(JSON.stringify(mostrar));
@@ -24,16 +31,31 @@ const consultas = async () => {
 }
 consultas();
 
-app.get('/', (req, res) => {
-    res.sendFile(path.resolve(raiz+'public/', 'index.html'));
-    //res.send('Servidor Iniciado.');
-});
-
 //! POST
-app.get('/submit', (req, res) => {
-    
-    res.send('hola');
-});
+const insertQuery = async () => {
+    app.post('/submit', (req, res) => {
+
+        const nombre = req.body.nombre;
+        const apellido = req.body.apellido;
+        const usuario = req.body.usuario;
+        const clave = req.body.clave;
+        
+        module.exports.nombre = nombre;
+        module.exports.apellido = apellido;
+        module.exports.usuario = usuario;
+        module.exports.clave = clave;
+        
+        queries.insert();
+        res.redirect('/');
+    });
+}
+insertQuery();
+
+//! PUT
+
+//! PATCH (ESTE HACERLO HASTA EL FINAL)
+
+//! DELETE
 
 const PORT = process.env.PORT || 9090;
 

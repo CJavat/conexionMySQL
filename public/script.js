@@ -60,6 +60,7 @@ post.addEventListener("click", () => {
 
     formulario.setAttribute('method','POST');
     formulario.setAttribute('action','/submit');
+    formulario.setAttribute('id','formulario');
 
     inputNombre.setAttribute('type', 'text');
     inputNombre.setAttribute('placeholder', 'ESCRIBE TU NOMBRE.');
