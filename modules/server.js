@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-
+const queries = require('./queries');
 
 // Para poner rutas estaticas.
 app.use(express.static('public'));
@@ -8,10 +8,11 @@ app.use(express.static('public'));
 // app.use('/rutaPersonalizada', express.static('public'));
 // --> para igresar seria: localhost:9090/rutaPersonalizada/index.html
 
-// MIDDLEWARE - Sirve para parsear el body del POST para poderlo obtener.
+//* MIDDLEWARE - Sirve para parsear el body del POST para poderlo obtener.
 const bodyParser = require('body-parser')
 app.use(bodyParser.urlencoded({ extended: false }))
 
+//* MIDDLEWARE - Para darle acceso al core de que pueda manipular MYSQL.
 app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Headers', 'Authorization, X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Allow-Request-Method');
@@ -20,19 +21,29 @@ app.use((req, res, next) => {
     next();
 });
 
-const queries = require('./queries');
-
+//! GET
 const consultas = async () => {
     const mostrar = await queries.query;
-    app.get('/api/usuarios', (req, res) => {
-        console.log(mostrar);
-        res.send(JSON.stringify(mostrar));
-    });
+    if(mostrar == 0) { // ARREGLAR MEJOR ESTA PARTE DEL CODIGO.
+        app.get('/api/usuarios', (req, res) => {
+            console.clear();
+            res.end(JSON.stringify('no hay datos'));
+            return console.log('Aún no hay ningún regisro en la Base de Datos.');
+        });
+    }
+    else {
+        app.get('/api/usuarios', (req, res) => {
+            console.log(mostrar);
+            res.send(JSON.stringify(mostrar));
+        });
+    }
 }
 consultas();
 
 //! POST
 const insertQuery = async () => {
+    // PONER CONDICION DE QUE NO SE ENVIE NADA A LA BASE DE DATOS SI NO 
+    // HAY DATOS QUE MANDAR. // INTENTAR CON REQUIRE EN EL FORM.
     app.post('/submit', (req, res) => {
 
         const nombre = req.body.nombre;
@@ -57,8 +68,16 @@ insertQuery();
 
 //! DELETE
 
-const PORT = process.env.PORT || 9090;
 
+
+
+
+
+
+
+
+
+const PORT = process.env.PORT || 9090;
 app.listen(PORT, () => {
     console.log(`El servidor está escuchando en el puerto: ${PORT}`);
 });

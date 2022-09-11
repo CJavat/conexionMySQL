@@ -31,26 +31,7 @@ const crearNodo = (id_usuario, nombre, apellido, usuario, clave) => {
     return nodoPadre;
 }
 
-get.addEventListener("click", () => {
-    const obtenerDatos = async () => {
-        divResultado.innerHTML = '';
-
-        const datos = await fetch('http://localhost:9090/api/usuarios');
-        const resultados = await datos.json();
-
-        for(let dato of resultados) {
-            const nuevoNodo = crearNodo(dato.id_usuario, dato.nombre, dato.apellido, dato.usuario, dato.clave);
-            nuevoNodo.classList.add('datos');
-            documentFragment.appendChild(nuevoNodo);
-        }
-        divResultado.appendChild(documentFragment);
-    }
-    obtenerDatos();
-});
-
-post.addEventListener("click", () => {
-    divConsultas.innerHTML = '';
-
+const crearFormulario = () => {
     const formulario = document.createElement('FORM');
     const inputNombre = document.createElement('INPUT');
     const inputApellido = document.createElement('INPUT');
@@ -74,6 +55,7 @@ post.addEventListener("click", () => {
     inputClave.setAttribute('type', 'password');
     inputClave.setAttribute('placeholder', 'ESCRIBE TU CONTRASEÑA.');
     inputClave.setAttribute('name', 'clave');
+    inputClave.setAttribute('autocomplete', 'on');
 
     inputEnviar.setAttribute('type', 'submit');
     inputEnviar.textContent = 'ENVIAR';
@@ -86,6 +68,39 @@ post.addEventListener("click", () => {
     documentFragment.appendChild(formulario);
 
     divConsultas.appendChild(documentFragment);
+
+    return divConsultas;
+}
+
+
+get.addEventListener("click", () => {
+    const obtenerDatos = async () => {
+        divResultado.innerHTML = '';
+
+        const datos = await fetch('http://localhost:9090/api/usuarios');
+        const resultados = await datos.json();
+
+        if(resultados === 'no hay datos') {
+            const nodoSinDatos = document.createElement('P');
+            nodoSinDatos.textContent = 'AUN NO HAY DATOS EN BASE DE DATOS.';
+            nodoSinDatos.style = `text-align: center; padding: 1rem;`;
+            documentFragment.appendChild(nodoSinDatos);
+            return divResultado.appendChild(documentFragment);
+        }
+
+        for(let dato of resultados) {
+            const nuevoNodo = crearNodo(dato.id_usuario, dato.nombre, dato.apellido, dato.usuario, dato.clave);
+            nuevoNodo.classList.add('datos');
+            documentFragment.appendChild(nuevoNodo);
+        }
+        divResultado.appendChild(documentFragment);
+    }
+    obtenerDatos();
+});
+
+post.addEventListener("click", () => {
+    divConsultas.innerHTML = '';
+    crearFormulario();
 });
 
 // put.addEventListener("click", () => {});
