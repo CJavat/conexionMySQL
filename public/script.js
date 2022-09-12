@@ -1,10 +1,11 @@
 const get = document.getElementById('get');
 const post = document.getElementById('post');
 const put = document.getElementById('put');
+const patch = document.getElementById('patch');
 const del = document.getElementById('delete');
 
-const divResultado = document.getElementById('resultado');
 const divConsultas = document.getElementById('consultas');
+const divResultado = document.getElementById('resultado');
 
 const documentFragment = document.createDocumentFragment();
 
@@ -31,48 +32,7 @@ const crearNodo = (id_usuario, nombre, apellido, usuario, clave) => {
     return nodoPadre;
 }
 
-const crearFormulario = () => {
-    const formulario = document.createElement('FORM');
-    const inputNombre = document.createElement('INPUT');
-    const inputApellido = document.createElement('INPUT');
-    const inputUsuario = document.createElement('INPUT');
-    const inputClave = document.createElement('INPUT');
-    const inputEnviar = document.createElement('INPUT');
-
-    formulario.setAttribute('method','POST');
-    formulario.setAttribute('action','/submit');
-    formulario.setAttribute('id','formulario');
-
-    inputNombre.setAttribute('type', 'text');
-    inputNombre.setAttribute('placeholder', 'ESCRIBE TU NOMBRE.');
-    inputNombre.setAttribute('name', 'nombre');
-    inputApellido.setAttribute('type', 'text');
-    inputApellido.setAttribute('placeholder', 'ESCRIBE TU APELLIDO.');
-    inputApellido.setAttribute('name', 'apellido');
-    inputUsuario.setAttribute('type', 'text');
-    inputUsuario.setAttribute('placeholder', 'ESCRIBE TU USUARIO.');
-    inputUsuario.setAttribute('name', 'usuario');
-    inputClave.setAttribute('type', 'password');
-    inputClave.setAttribute('placeholder', 'ESCRIBE TU CONTRASEÑA.');
-    inputClave.setAttribute('name', 'clave');
-    inputClave.setAttribute('autocomplete', 'on');
-
-    inputEnviar.setAttribute('type', 'submit');
-    inputEnviar.textContent = 'ENVIAR';
-
-    formulario.appendChild(inputNombre);
-    formulario.appendChild(inputApellido);
-    formulario.appendChild(inputUsuario);
-    formulario.appendChild(inputClave);
-    formulario.appendChild(inputEnviar);
-    documentFragment.appendChild(formulario);
-
-    divConsultas.appendChild(documentFragment);
-
-    return divConsultas;
-}
-
-
+//! GET
 get.addEventListener("click", () => {
     const obtenerDatos = async () => {
         divResultado.innerHTML = '';
@@ -98,10 +58,175 @@ get.addEventListener("click", () => {
     obtenerDatos();
 });
 
+//! POST
 post.addEventListener("click", () => {
     divConsultas.innerHTML = '';
-    crearFormulario();
+
+    const formulario = document.createElement('FORM');
+    const inputNombre = document.createElement('INPUT');
+    const inputApellido = document.createElement('INPUT');
+    const inputUsuario = document.createElement('INPUT');
+    const inputClave = document.createElement('INPUT');
+    const inputEnviar = document.createElement('INPUT');
+
+    formulario.setAttribute('method','POST');
+    formulario.setAttribute('action','/submitPOST');
+    formulario.setAttribute('id','formulario');
+
+    inputNombre.setAttribute('type', 'text');
+    inputNombre.setAttribute('placeholder', 'ESCRIBE TU NOMBRE.');
+    inputNombre.setAttribute('name', 'nombre');
+    inputNombre.setAttribute('required', '');
+    inputApellido.setAttribute('type', 'text');
+    inputApellido.setAttribute('placeholder', 'ESCRIBE TU APELLIDO.');
+    inputApellido.setAttribute('name', 'apellido');
+    inputApellido.setAttribute('required', '');
+    inputUsuario.setAttribute('type', 'text');
+    inputUsuario.setAttribute('placeholder', 'ESCRIBE TU USUARIO.');
+    inputUsuario.setAttribute('name', 'usuario');
+    inputUsuario.setAttribute('required', '');
+    inputClave.setAttribute('type', 'password');
+    inputClave.setAttribute('placeholder', 'ESCRIBE TU CONTRASEÑA.');
+    inputClave.setAttribute('name', 'clave');
+    inputClave.setAttribute('autocomplete', 'on');
+    inputClave.setAttribute('required', '');
+
+    inputEnviar.setAttribute('type', 'submit');
+    inputEnviar.textContent = 'ENVIAR';
+
+    formulario.appendChild(inputNombre);
+    formulario.appendChild(inputApellido);
+    formulario.appendChild(inputUsuario);
+    formulario.appendChild(inputClave);
+    formulario.appendChild(inputEnviar);
+    documentFragment.appendChild(formulario);
+
+    divConsultas.appendChild(documentFragment);
 });
 
-// put.addEventListener("click", () => {});
-// del.addEventListener("click", () => {});
+//! PUT
+put.addEventListener("click", () => {
+    divConsultas.innerHTML = '';
+
+    const formulario = document.createElement('FORM');
+    const inputId = document.createElement('INPUT');
+    const inputNombre = document.createElement('INPUT');
+    const inputApellido = document.createElement('INPUT');
+    const inputUsuario = document.createElement('INPUT');
+    const inputClave = document.createElement('INPUT');
+    const inputEnviar = document.createElement('INPUT');
+
+    formulario.setAttribute('method','POST');
+    formulario.setAttribute('action','/submitPUT');
+    formulario.setAttribute('id','formulario');
+
+    inputId.setAttribute('type', 'number');
+    inputId.setAttribute('placeholder', 'ESCRIBE TU ID');
+    inputId.setAttribute('name', 'id');
+    inputId.setAttribute('required', '');
+    inputNombre.setAttribute('type', 'text');
+    inputNombre.setAttribute('placeholder', 'ESCRIBE TU NOMBRE.');
+    inputNombre.setAttribute('name', 'nombre');
+    inputNombre.setAttribute('required', '');
+    inputApellido.setAttribute('type', 'text');
+    inputApellido.setAttribute('placeholder', 'ESCRIBE TU APELLIDO.');
+    inputApellido.setAttribute('name', 'apellido');
+    inputApellido.setAttribute('required', '');
+    inputUsuario.setAttribute('type', 'text');
+    inputUsuario.setAttribute('placeholder', 'ESCRIBE TU USUARIO.');
+    inputUsuario.setAttribute('name', 'usuario');
+    inputUsuario.setAttribute('required', '');
+    inputClave.setAttribute('type', 'password');
+    inputClave.setAttribute('placeholder', 'ESCRIBE TU CONTRASEÑA.');
+    inputClave.setAttribute('name', 'clave');
+    inputClave.setAttribute('autocomplete', 'on');
+    inputClave.setAttribute('required', '');
+
+    inputEnviar.setAttribute('type', 'submit');
+    inputEnviar.textContent = 'ENVIAR';
+
+    formulario.appendChild(inputId);
+    formulario.appendChild(inputNombre);
+    formulario.appendChild(inputApellido);
+    formulario.appendChild(inputUsuario);
+    formulario.appendChild(inputClave);
+    formulario.appendChild(inputEnviar);
+    documentFragment.appendChild(formulario);
+
+    divConsultas.appendChild(documentFragment);
+});
+
+//! PATCH
+patch.addEventListener("click", () => {
+    divConsultas.innerHTML = '';
+
+    const formulario = document.createElement('FORM');
+    const inputId = document.createElement('INPUT');
+    const inputNombre = document.createElement('INPUT');
+    const inputApellido = document.createElement('INPUT');
+    const inputUsuario = document.createElement('INPUT');
+    const inputClave = document.createElement('INPUT');
+    const inputEnviar = document.createElement('INPUT');
+
+    formulario.setAttribute('method','POST');
+    formulario.setAttribute('action','/submitPATCH');
+    formulario.setAttribute('id','formulario');
+
+    inputId.setAttribute('type', 'number');
+    inputId.setAttribute('placeholder', 'ID DEL DOCUMENTO A ACTUALIZAR');
+    inputId.setAttribute('name', 'id');
+    inputId.setAttribute('required', '');
+    inputNombre.setAttribute('type', 'text');
+    inputNombre.setAttribute('placeholder', 'ESCRIBE TU NOMBRE.');
+    inputNombre.setAttribute('name', 'nombre');
+    inputApellido.setAttribute('type', 'text');
+    inputApellido.setAttribute('placeholder', 'ESCRIBE TU APELLIDO.');
+    inputApellido.setAttribute('name', 'apellido');
+    inputUsuario.setAttribute('type', 'text');
+    inputUsuario.setAttribute('placeholder', 'ESCRIBE TU USUARIO.');
+    inputUsuario.setAttribute('name', 'usuario');
+    inputClave.setAttribute('type', 'password');
+    inputClave.setAttribute('placeholder', 'ESCRIBE TU CONTRASEÑA.');
+    inputClave.setAttribute('name', 'clave');
+    inputClave.setAttribute('autocomplete', 'on');
+
+    inputEnviar.setAttribute('type', 'submit');
+    inputEnviar.textContent = 'ENVIAR';
+
+    formulario.appendChild(inputId);
+    formulario.appendChild(inputNombre);
+    formulario.appendChild(inputApellido);
+    formulario.appendChild(inputUsuario);
+    formulario.appendChild(inputClave);
+    formulario.appendChild(inputEnviar);
+    documentFragment.appendChild(formulario);
+
+    divConsultas.appendChild(documentFragment);
+});
+
+//! DELETE
+del.addEventListener("click", () => {
+    divConsultas.innerHTML = '';
+    
+    const formulario = document.createElement('FORM');
+    const inputId = document.createElement('INPUT');
+    const inputEnviar = document.createElement('INPUT');
+
+    formulario.setAttribute('method','POST');
+    formulario.setAttribute('action','/submitDELETE');
+    formulario.setAttribute('id','formulario');
+
+    inputId.setAttribute('type', 'number');
+    inputId.setAttribute('placeholder', 'ESCRIBE TU ID');
+    inputId.setAttribute('name', 'id_user');
+    inputId.setAttribute('required', '');
+
+    inputEnviar.setAttribute('type', 'submit');
+    inputEnviar.textContent = 'ENVIAR';
+
+    formulario.appendChild(inputId);
+    formulario.appendChild(inputEnviar);
+    documentFragment.appendChild(formulario);
+
+    divConsultas.appendChild(documentFragment);
+});
